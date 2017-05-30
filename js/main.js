@@ -1,21 +1,28 @@
-var minTemp = document.getElementById('min-temp');
-var maxTemp = document.getElementById('max-temp');
+var searchName = document.getElementById("userName");
+var button = document.getElementById("btnSearch");
+var user = document.getElementById("name");
+var photoUser = document.getElementById("photo");
+var numberOfRepo = document.getElementById("number");
 var request = new XMLHttpRequest();
 
-request.open('GET', 'https://www.metaweather.com/api/location/766273/', true); // use true to make the request async
+function search() {
+  request.open("GET", "https://api.github.com/users/" + searchName.value, true);
+  request.onload = function() {
+    if (request.status >= 200 && request.status < 400) {
+      var data = JSON.parse(request.responseText);
+      user.innerHTML = data.name;
+      photoUser.innerHTML = '<img src ="' + data.avatar_url + '">';
+      numberOfRepo.innerHTML = data.public_repos;
+    } else {
+      console.log('Error del servidor, puede que el archivo no exista o que se haya producido un error interno en el servidor');
+    }
+  };
 
-request.onload = function() {
-  if (request.status >= 200 && request.status < 400) {
-    var data = JSON.parse(request.responseText);
-    minTemp.innerHTML = Math.round(data.consolidated_weather[0].min_temp);
-    maxTemp.innerHTML = Math.round(data.consolidated_weather[0].max_temp);
-  } else {
-    console.log('Error del servidor, puede que el archivo no exista o que se haya producido un error interno en el servidor');
-  }
-};
 
-request.onerror = function() {
-  console.log('Error al tratar de conectarse con el servidor');
-};
+  request.onerror = function() {
+    console.log('Error al tratar de conectarse con el servidor');
+  };
 
-request.send();
+  request.send();
+}
+button.addEventListener("click", search);
