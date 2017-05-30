@@ -1,4 +1,6 @@
+"use strict";
 var searchName = document.getElementById("userName");
+
 var button = document.getElementById("btnSearch");
 var user = document.getElementById("name");
 var photoUser = document.getElementById("photo");

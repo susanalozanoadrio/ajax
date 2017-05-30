@@ -1,0 +1,9 @@
+.smallPage{
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  align-items: center;
+  background-color:$secondaryColor;
+  width:600px;
+  height: 600px;
+}
